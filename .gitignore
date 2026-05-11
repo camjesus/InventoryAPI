@@ -1,0 +1,14 @@
+# Build
+**/bin/
+**/obj/
+
+# User settings
+*.user
+.vs/
+.idea/
+
+# Docker
+.dockerignore
+
+# Environment
+appsettings.Development.json
