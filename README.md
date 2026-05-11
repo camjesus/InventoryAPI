@@ -348,4 +348,12 @@ row1 --> `7892caa0-c1b2-47ae-ad7c-7822a56cfa30,Electro,Smart,2026-05-10 18:52:38
 row2 --> 3d86932b-e910-4efb-bf89-7837700b3f50,Perifericos,"",2026-05-10 22:20:39.6467565,,false //cambió el valor
 `
 
+```bash
+
+# Bajar la aplicación 
+docker compose down
+
+# Bajar la aplicación eliminando la BD
+docker compose down -v
+```
 FIN
