@@ -1,6 +1,5 @@
 using InventoryAPI.Domain.Interfaces.Repositories;
 using InventoryAPI.Entities;
-using InventoryAPI.Entities.Common;
 using InventoryAPI.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,7 +21,7 @@ public class ProductRepository : BaseRepository<Product>, IProductRepository
     {
         return await _dbSet.Where(p => p.Sku == sku)
             .Include(p => p.Category)
-            .FirstOrDefaultAsync(p => p.Sku == sku);
+            .FirstOrDefaultAsync(p => p.Sku.ToUpper() == sku.ToUpper());
     }
 
     public async Task<bool> ExistsBySkuAsync(string sku)
@@ -34,7 +33,7 @@ public class ProductRepository : BaseRepository<Product>, IProductRepository
     {
         var existing = await _dbSet
             .Include(p => p.Category)
-            .FirstOrDefaultAsync(p => p.Sku == product.Sku);
+            .FirstOrDefaultAsync(p => p.Sku.ToUpper() == product.Sku.ToUpper());
 
         if (existing is not null)
             return existing;
@@ -42,5 +41,19 @@ public class ProductRepository : BaseRepository<Product>, IProductRepository
         await _dbSet.AddAsync(product);
         await _context.SaveChangesAsync();
         return product;
+    }
+    
+    public override async Task<Product?> GetByIdAsync(Guid id)
+    {
+        return await _dbSet
+            .Include(p => p.Category)
+            .FirstOrDefaultAsync(p => p.Id == id);
+    }
+    
+    public override async Task<IEnumerable<Product>> GetAllAsync()
+    {
+        return await _dbSet
+            .Include(p => p.Category)
+            .ToListAsync();
     }
 }

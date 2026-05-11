@@ -17,12 +17,12 @@ public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
     }
 
 
-    public async Task<IEnumerable<T>> GetAllAsync()
+    public virtual async Task<IEnumerable<T>> GetAllAsync()
     {
         return await _dbSet.ToListAsync();
     }
 
-    public async Task<T?> GetByIdAsync(Guid id)
+    public virtual async Task<T?> GetByIdAsync(Guid id)
     {
         return await _dbSet.FirstOrDefaultAsync(e => e.Id == id);
     }
